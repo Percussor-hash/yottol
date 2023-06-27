@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>City Data</title>
+  <style>
+    .city-info {
+      display: none;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Handle user input in the text field
+      $('#searchField').on('input', function() {
+        var searchText = $(this).val().toLowerCase();
+
+        // Fetch city data from the server using Ajax
+        $.ajax({
+          url: '/getCityData',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ search: searchText }),
+          success: function(response) {
+            if (response.length > 0) {
+              // Display city information if a match is found
+              var city = response[0];
+              $('.city-info').show();
+              $('#rank').text('Rank: ' + city.rank);
+              $('#name').text('Name: ' + city.name);
+              $('#population2011').text('Population (2011): ' + city.population2011);
+              $('#population2001').text('Population (2001): ' + city.population2001);
+              $('#state').text('State or Union Territory: ' + city.state);
+            } else {
+              // Hide city information if no match is found
+              $('.city-info').hide();
+            }
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>City Data</h1>
+  <input type="text" id="searchField" placeholder="Search for a city">
+  
+  <div class="city-info">
+    <h2>City Information</h2>
+    <p id="rank"></p>
+    <p id="name"></p>
+    <p id="population2011"></p>
+    <p id="population2001"></p>
+    <p id="state"></p>
+  </div>
+</body>
+</html>
