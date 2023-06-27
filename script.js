@@ -1,9 +1,9 @@
 $(document).ready(function() {
     var cities = []; // Array to store the fetched city data
 
-    // Fetch city data from the database
+    // Fetch city data from the database using the proxy
     $.ajax({
-        url: 'https://en.wikipedia.org/wiki/List_of_cities_in_India_by_population',
+        url: 'proxy.php',
         method: 'GET',
         dataType: 'html',
         success: function(response) {
